@@ -15,17 +15,17 @@ def nc2tiff(nc_dataset, hub_height, var_name):
     z = nc_dataset["z"][...]
     variable = nc_dataset[var_name]
 
-    xmin, ymin = lats[0], lons[0]
-    xmax, ymax = lats[-1], lons[-1]
-    px_height = (xmax - xmin) / (lons.size - 1)
-    px_width = (ymax - ymin) / (lats.size - 1)
+    bottom, left = lats[0], lons[0]
+    top, right = lats[-1], lons[-1]
+    px_width = (right - left) / (lons.size - 1)
+    px_height = (top - bottom) / (lats.size - 1)
 
     # assume coordinates refer to the center of the pixels.
-    origin_x = xmin - px_width / 2
-    origin_y = ymin - px_height / 2
+    origin_y = bottom - px_height / 2
+    origin_x = left - px_width / 2
     values = variable[np.where(z == hub_height)[0][0]]
-    transform = rio.Affine.translation(origin_y, origin_x) * rio.Affine.scale(
-        px_height, px_width
+    transform = rio.Affine.translation(origin_x, origin_y) * rio.Affine.scale(
+        px_width, px_height
     )
 
     fp = io.BytesIO()
