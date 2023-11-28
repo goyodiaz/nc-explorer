@@ -48,16 +48,16 @@ class TestApp(unittest.TestCase):
 
         fp.seek(0)
         with rio.open(fp=fp) as ods:
-            assert ods.driver == "GTiff"
-            assert ods.count == 1
-            assert ods.shape == var1.shape[1:]
-            assert ods.crs == rio.CRS.from_epsg(4326)
-            assert ods.dtypes == ("float32",)
-            assert ods.bounds.left == 9.444444444444445
-            assert ods.bounds.bottom == 20.714285714285715
-            assert ods.bounds.right == 20.555555555555557
-            assert ods.bounds.top == 9.285714285714286
-            assert np.array_equal(ods.read(1), var1[1])
+            self.assertEqual("GTiff", ods.driver)
+            self.assertEqual(1, ods.count)
+            self.assertEqual(var1.shape[1:], ods.shape)
+            self.assertEqual(rio.CRS.from_epsg(4326), ods.crs)
+            self.assertEqual(("float32",), ods.dtypes)
+            self.assertEqual(9.444444444444445, ods.bounds.left)
+            self.assertEqual(20.714285714285715, ods.bounds.bottom)
+            self.assertEqual(20.555555555555557, ods.bounds.right)
+            self.assertEqual(9.285714285714286, ods.bounds.top)
+            np.testing.assert_array_equal(var1[1], ods.read(1))
 
 
 if __name__ == "__main__":
