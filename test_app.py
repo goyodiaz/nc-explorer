@@ -34,7 +34,7 @@ def create_nc_dataset(lons, lats, zs, data):
 class TestApp(unittest.TestCase):
     def test_nc2tiff(self):
         lons = np.linspace(10, 20, num=10)
-        lats = np.linspace(10, 20, num=8)
+        lats = np.linspace(20, 40, num=8)
         zs = [70, 80, 90]
         var1 = (
             np.arange(240, dtype="float32").reshape(len(zs), len(lats), len(lons)) / 10
@@ -54,9 +54,9 @@ class TestApp(unittest.TestCase):
             self.assertEqual(rio.CRS.from_epsg(4326), ods.crs)
             self.assertEqual(("float32",), ods.dtypes)
             self.assertEqual(9.444444444444445, ods.bounds.left)
-            self.assertEqual(20.714285714285715, ods.bounds.bottom)
+            self.assertEqual(41.42857142857143, ods.bounds.bottom)
             self.assertEqual(20.555555555555557, ods.bounds.right)
-            self.assertEqual(9.285714285714286, ods.bounds.top)
+            self.assertEqual(18.571428571428573, ods.bounds.top)
             np.testing.assert_array_equal(var1[1], ods.read(1))
 
 
