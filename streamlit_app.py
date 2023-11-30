@@ -7,6 +7,7 @@ import numpy as np
 import rasterio as rio
 import rasterio.plot as rplot
 import streamlit as st
+from affine import Affine
 
 
 def nc2tiff(nc_dataset, hub_height, var_name):
@@ -25,9 +26,7 @@ def nc2tiff(nc_dataset, hub_height, var_name):
     left = xmin - px_width / 2
     values = variable[np.where(z == hub_height)[0][0]]
 
-    transform = rio.Affine.translation(left, top) * rio.Affine.scale(
-        px_width, -px_height
-    )
+    transform = Affine.translation(left, top) * Affine.scale(px_width, -px_height)
 
     fp = io.BytesIO()
     with rio.open(
