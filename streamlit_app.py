@@ -13,8 +13,9 @@ from affine import Affine
 def nc2tiff(nc_dataset, hub_height, var_name):
     lons = nc_dataset["lon"]
     lats = nc_dataset["lat"]
-    z = nc_dataset["z"][...]
-    variable = nc_dataset[var_name]
+    values = nc_dataset[var_name][np.where(nc_dataset["z"][...] == hub_height)[0][0]][
+        ::-1
+    ]
 
     ymin, xmin = lats[0], lons[0]
     ymax, xmax = lats[-1], lons[-1]
@@ -24,7 +25,6 @@ def nc2tiff(nc_dataset, hub_height, var_name):
     # assume coordinates refer to the center of the pixels.
     top = ymax + px_height / 2
     left = xmin - px_width / 2
-    values = variable[np.where(z == hub_height)[0][0]]
 
     transform = Affine.translation(left, top) * Affine.scale(px_width, -px_height)
 
@@ -42,7 +42,7 @@ def nc2tiff(nc_dataset, hub_height, var_name):
         nodata=np.nan,
         sharing=False,  # make it thread-safe.
     ) as raster:
-        raster.write(values[::-1], 1)
+        raster.write(values, 1)
     return fp
 
 
