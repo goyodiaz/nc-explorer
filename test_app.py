@@ -54,10 +54,10 @@ class TestApp(unittest.TestCase):
             self.assertEqual(rio.CRS.from_epsg(4326), ods.crs)
             self.assertEqual(("float32",), ods.dtypes)
             self.assertEqual(9.444444444444445, ods.bounds.left)
-            self.assertEqual(41.42857142857143, ods.bounds.bottom)
+            self.assertEqual(18.571428571428573, ods.bounds.bottom)
             self.assertEqual(20.555555555555557, ods.bounds.right)
-            self.assertEqual(18.571428571428573, ods.bounds.top)
-            np.testing.assert_array_equal(var1[1], ods.read(1))
+            self.assertEqual(41.42857142857143, ods.bounds.top)
+            np.testing.assert_array_equal(var1[1][::-1], ods.read(1))
 
 
 if __name__ == "__main__":

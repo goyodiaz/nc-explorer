@@ -21,11 +21,12 @@ def nc2tiff(nc_dataset, hub_height, var_name):
     px_height = (ymax - ymin) / (lats.size - 1)
 
     # assume coordinates refer to the center of the pixels.
-    bottom = ymin - px_height / 2
+    top = ymax + px_height / 2
     left = xmin - px_width / 2
     values = variable[np.where(z == hub_height)[0][0]]
-    transform = rio.Affine.translation(left, bottom) * rio.Affine.scale(
-        px_width, px_height
+
+    transform = rio.Affine.translation(left, top) * rio.Affine.scale(
+        px_width, -px_height
     )
 
     fp = io.BytesIO()
@@ -42,7 +43,7 @@ def nc2tiff(nc_dataset, hub_height, var_name):
         nodata=np.nan,
         sharing=False,  # make it thread-safe.
     ) as raster:
-        raster.write(values, 1)
+        raster.write(values[::-1], 1)
     return fp
 
 
