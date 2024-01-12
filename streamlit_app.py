@@ -59,7 +59,7 @@ def main():
         var_name = st.selectbox(label="Variable", options=var_names)
         data = nc2tiff(nc_dataset=ds, hub_height=hub_height, var_name=var_name)
 
-    if st.checkbox(label="Plot variable"):
+    if st.toggle(label="Plot variable"):
         ax = plt.subplot()
         with rio.open(data) as ds:
             ax = plot_variable(ds=ds, bidx=1, ax=ax)
