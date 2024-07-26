@@ -17,8 +17,9 @@ def nc2tiff(nc_dataset, hub_height, var_name):
         ::-1
     ]
 
-    ymin, xmin = lats[0], lons[0]
-    ymax, xmax = lats[-1], lons[-1]
+    # cast to float to preserve float64 arithmetic in numpy>=2.
+    ymin, xmin = map(float, [lats[0], lons[0]])
+    ymax, xmax = map(float, [lats[-1], lons[-1]])
     px_width = (xmax - xmin) / (lons.size - 1)
     px_height = (ymax - ymin) / (lats.size - 1)
 
