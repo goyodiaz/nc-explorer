@@ -44,6 +44,7 @@ def nc2tiff(nc_dataset, hub_height, var_name):
         sharing=False,  # make it thread-safe.
     ) as raster:
         raster.write(values, 1)
+    fp.seek(0)
     return fp
 
 

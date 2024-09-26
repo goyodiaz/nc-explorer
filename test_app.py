@@ -46,7 +46,6 @@ class TestApp(unittest.TestCase):
         ) as ds:
             fp = app.nc2tiff(nc_dataset=ds, hub_height=80, var_name="VAR1")
 
-        fp.seek(0)
         with rio.open(fp=fp) as ods:
             self.assertEqual("GTiff", ods.driver)
             self.assertEqual(1, ods.count)
