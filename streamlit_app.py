@@ -62,7 +62,7 @@ def main():
         data = nc2tiff(nc_dataset=ds, hub_height=hub_height, var_name=var_name)
 
     if st.toggle(label="Plot variable"):
-        ax = plt.subplot()
+        _, ax = plt.subplots()
         with rio.open(data) as ds:
             ax = plot_variable(ds=ds, bidx=1, ax=ax)
         st.pyplot(ax.figure)
