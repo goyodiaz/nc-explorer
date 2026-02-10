@@ -1,6 +1,6 @@
 matplotlib<3.11
 netCDF4<1.8
 numpy<2.5
-rasterio<1.5
-streamlit<1.53
+rasterio<1.6
+streamlit<1.55
 
