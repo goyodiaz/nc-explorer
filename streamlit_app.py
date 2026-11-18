@@ -27,7 +27,7 @@ def nc2tiff(nc_dataset, hub_height, var_name):
     top = ymax + px_height / 2
     left = xmin - px_width / 2
 
-    transform = Affine.translation(left, top) * Affine.scale(px_width, -px_height)
+    transform = Affine.translation(left, top) @ Affine.scale(px_width, -px_height)
 
     fp = io.BytesIO()
     with rio.open(
