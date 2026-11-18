@@ -70,9 +70,15 @@ def main():
     file_name = st.text_input(
         label="File name",
         value=Path(nc_buf.name).stem + f"_{int(hub_height)}m_{var_name}" + ".tif",
+        live=True,
     )
 
-    st.download_button(label="Download TIFF file", data=data, file_name=file_name)
+    st.download_button(
+        label="Download TIFF file",
+        data=data,
+        file_name=file_name,
+        icon=":material/download:",
+    )
 
 
 def plot_variable(ds, bidx, ax):
